@@ -1,0 +1,22 @@
+<div class="py-4">
+    <h2>Lista de todos los bugs</h2>
+
+    <hr>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Desarrollador</th>
+                <th scope="col">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each bugs}}
+                {{> bugGeneral individualBug=this}}
+            {{/each}}
+        </tbody>
+    </table>
+</div>

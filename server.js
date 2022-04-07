@@ -4,11 +4,11 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const jwt = require('jsonwebtoken');
 const secretKey = require('./secretKey');
-const { obtainBugs } = require('./SQLqueries');
+const { obtainBugsGeneral, obtainBugsByUser, validateUser } = require('./SQLqueries');
 const port = process.env.PORT || 3000;
-const minutos = 1;
+const minutes = 1;
 let tokenUser = '';
-let tokenAdmin = '';
+let user = '';
 
 // Setup - App
 app.listen(port, console.log(`Listening on port ${port}`));
@@ -42,6 +42,55 @@ app.use(bodyParser.json());
 // Index page
 app.get('/', async (req, res) => {
     res.render('home', {
-        bugs: await obtainBugs(),
+        bugs: await obtainBugsGeneral(),
     });
 });
+
+// Login page
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+// Authenticate user
+app.post('/signin', async (req, res) => {
+    const { email, password } = req.body;
+    user = await validateUser(email, password);
+    if (user && user.length > 0){
+        tokenUser = jwt.sign(
+            {
+                exp: Math.floor(Date.now() / 1000) + (minutes * 60),
+                data: user,
+            },
+            secretKey
+        );
+        if (user[0].rol === 1){
+            res.redirect(`/admin?token=${tokenUser}`);
+        }
+        if (user[0].rol === 2){
+            res.redirect(`/user?token=${tokenUser}`);
+        }
+    }
+    else {
+        res.render('incorrectUserOrPassword');
+    }
+});
+
+// Verify authenticity of the token for normal user
+app.get('/user', async (req, res) => {
+    const { token } = req.query;
+    jwt.verify(token, secretKey, async (err, decodedData) => {
+        if(err){
+            res.render('invalidToken');
+        }
+        else {
+            const userId = decodedData.data[0].id_usuario;
+            const bugsByUser = await obtainBugsByUser(userId);
+            res.render('user', {
+                user: decodedData.data,
+                bugsByUser: bugsByUser,
+            });
+        }
+    });
+});
+
+// Verify authenticity of the token for admin user

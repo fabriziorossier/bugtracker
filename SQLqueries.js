@@ -10,7 +10,7 @@ const config = {
 const pool = new Pool();
 
 // READ
-const obtainBugs = async () => {
+const obtainBugsGeneral = async () => {
     try {
         const text = `SELECT * FROM bug ORDER BY ID_bug DESC`;
         const values = [];
@@ -22,8 +22,42 @@ const obtainBugs = async () => {
     catch (e) {
         console.log(e);
     }
+};
+// READ - DEBUG
+//obtainBugsGeneral();
+
+// READ
+const obtainBugsByUser = async (id) => {
+    try {
+        const text = `SELECT * FROM bug WHERE usuario = $1 ORDER BY ID_bug DESC`;
+        const values = [id];
+        const result = await pool.query(text, values)
+        .then(res => res.rows)
+        .catch(err => console.error(`Error executing query`, err.stack))
+        return result;
+    }
+    catch (e){
+        console.log(e);
+    }
 }
 // READ - DEBUG
-obtainBugs();
+//obtainBugsByUser(2);
 
-module.exports = { obtainBugs }
+// READ
+const validateUser = async (email, password) => {
+    try {
+        const text = `SELECT * FROM usuario WHERE email = $1 AND password = $2`;
+        const values = [email, password];
+        const result = await pool.query(text, values)
+        .then(res => res.rows)
+        .catch(err => console.error(`Error executing query`, err.stack))
+        return result;
+    }
+    catch (e) {
+        console.log(e);
+    }
+};
+// READ - DEBUG
+//validateUser('fabrizio@desafiolatam.com', '123456');
+
+module.exports = { obtainBugsGeneral, obtainBugsByUser, validateUser }
