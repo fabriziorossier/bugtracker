@@ -94,3 +94,14 @@ app.get('/user', async (req, res) => {
 });
 
 // Verify authenticity of the token for admin user
+app.get('/admin', async (req, res) => {
+    const { token } = req.query;
+    jwt.verify(token, secretKey, async (err, decodedData) => {
+        if(err){
+            res.render('invalidToken');
+        }
+        else {
+            res.render('admin');
+        }
+    });
+});
