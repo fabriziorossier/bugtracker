@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const jwt = require('jsonwebtoken');
 const secretKey = require('./secretKey');
-const {} = require('./SQLqueries');
+const { obtainBugs } = require('./SQLqueries');
 const port = process.env.PORT || 3000;
 const minutos = 1;
 let tokenUser = '';
@@ -38,3 +38,10 @@ app.set('view engine', 'handlebars');
 // Setup - body-parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+// Index page
+app.get('/', async (req, res) => {
+    res.render('home', {
+        bugs: await obtainBugs(),
+    });
+});
