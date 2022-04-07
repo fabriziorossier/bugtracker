@@ -4,9 +4,9 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const jwt = require('jsonwebtoken');
 const secretKey = require('./secretKey');
-const { obtainBugsGeneral, obtainBugsByUser, validateUser } = require('./SQLqueries');
+const { createBug, obtainBugsGeneral, obtainBugsByUser, obtainUserNames, validateUser } = require('./SQLqueries');
 const port = process.env.PORT || 3000;
-const minutes = 1;
+const minutes = 60;
 let tokenUser = '';
 let user = '';
 
@@ -101,7 +101,16 @@ app.get('/admin', async (req, res) => {
             res.render('invalidToken');
         }
         else {
-            res.render('admin');
+            res.render('admin', {
+                usersGeneral: await obtainUserNames(),
+            });
         }
     });
+});
+
+// Create bug
+app.post('/bug', async (req, res) => {
+    const { bugName, bugDescription, bugUser} = req.body;
+    await createBug(bugName, bugDescription, bugUser);
+    res.redirect('/');
 });
