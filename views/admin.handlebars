@@ -26,6 +26,26 @@
 </form>
 
 {{!-- Crear usuario --}}
-<form action="" method="POST" id="createUser">
-
+<form action="/user" method="POST" id="createUser">
+    <div class="mb-3">
+        <label for="userName" class="form-label">Nombre de usuario</label>
+        <input type="text" id="userName" name="userName">
+    </div>
+    <div class="mb-3">
+        <label for="userEmail" class="form-label">Email</label>
+        <input type="text" id="userEmail" name="userEmail">
+    </div>
+    <div class="mb-3">
+        <label for="userPassword" class="form-label">Contraseña</label>
+        <input type="password" id="userPassword" name="userPassword">
+    </div>
+    <div class="mb-3">
+        <label for="userRol" class="form-label">Rol</label>
+        <select id="userRol" name="userRol" class="form-select">
+            {{#each rols}}
+                {{> rol individualRol=this}}
+            {{/each}}
+        </select>
+    </div>
+    <button type="submit">Crear usuario</button>
 </form>
