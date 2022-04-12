@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const jwt = require('jsonwebtoken');
 const secretKey = require('./secretKey');
-const { createBug, createUser, obtainBugsGeneral, obtainBugsByUser, obtainUserNames, obtainRols, validateUser } = require('./SQLqueries');
+const { createBug, createUser, obtainBugsGeneral, obtainBugsByUser, obtainUserNames, obtainRols, validateUser, changeBugState } = require('./SQLqueries');
 const port = process.env.PORT || 3000;
 const minutes = 60;
 let tokenUser = '';
@@ -30,6 +30,21 @@ app.engine('handlebars',
         partialsDir: __dirname + '/views/components',
         helpers: {
             increment: function(value, options){ return parseInt(value) +1},
+            isStateEnCorreccion: function(value){
+                if(value === 'En corrección'){
+                    return true;
+                }
+            },
+            isStatePendiente: function(value){
+                if(value === 'Pendiente'){
+                    return true;
+                }
+            },
+            isStateFinalizado: function(value){
+                if(value === 'Finalizado'){
+                    return true;
+                }
+            },
         }
     })
 );
@@ -83,8 +98,8 @@ app.get('/user', async (req, res) => {
             res.render('invalidToken');
         }
         else {
-            const userId = decodedData.data[0].id_usuario;
-            const bugsByUser = await obtainBugsByUser(userId);
+            const userName = decodedData.data[0].nombre;
+            const bugsByUser = await obtainBugsByUser(userName);
             res.render('user', {
                 user: decodedData.data,
                 bugsByUser: bugsByUser,
@@ -121,4 +136,11 @@ app.post('/user', async (req, res) => {
     const { userName, userEmail, userPassword, userRol } = req.body;
     await createUser(userName, userEmail, userPassword, userRol);
     res.redirect('/');
+});
+
+// Change bug state
+app.post('/bugState/:id/:state', async (req, res) => {
+    const { id, state } = req.params;
+    const response = await changeBugState(id, state);
+    res.send(response);
 });

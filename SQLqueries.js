@@ -70,10 +70,10 @@ const obtainBugsGeneral = async () => {
 //obtainBugsGeneral();
 
 // READ
-const obtainBugsByUser = async (id) => {
+const obtainBugsByUser = async (userName) => {
     try {
         const text = `SELECT * FROM bug WHERE usuario = $1 ORDER BY ID_bug DESC`;
-        const values = [id];
+        const values = [userName];
         const result = await pool.query(text, values)
         .then(res => res.rows)
         .catch(err => console.error(`Error executing query`, err.stack))
@@ -137,4 +137,21 @@ const validateUser = async (email, password) => {
 // READ - DEBUG
 //validateUser('fabrizio@desafiolatam.com', '123456');
 
-module.exports = { createBug, createUser, obtainBugsGeneral, obtainBugsByUser, obtainUserNames, obtainRols, validateUser }
+// UPDATE
+const changeBugState = async (id, state) => {
+    try {
+        const text = `UPDATE bug SET estado = $1 WHERE ID_bug = $2`;
+        const values = [state, id];
+        const result = await pool.query(text, values)
+        .then(res => res.rows)
+        .catch(err => console.error(`Error executing query`, err.stack))
+        return result;
+    }
+    catch (e){
+        console.log(e);
+    }
+};
+// UPDATE - DEBUG
+//changeBugState(13, 'Finalizado');
+
+module.exports = { createBug, createUser, obtainBugsGeneral, obtainBugsByUser, obtainUserNames, obtainRols, validateUser, changeBugState }

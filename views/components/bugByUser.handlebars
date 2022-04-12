@@ -2,5 +2,41 @@
     <td>{{individualBug.id_bug}}</td>
     <td>{{individualBug.nombre}}</td>
     <td>{{individualBug.descripcion}}</td>
-    <td>{{individualBug.estado}}</td>
+    {{#if (isStatePendiente individualBug.estado)}}
+        <td>
+            <select name="state-{{@index}}" id="state-{{@index}}" class="form-select" onchange="changeBugState{{@index}}()">
+                <option value="Pendiente" selected>Pendiente</option>
+                <option value="En corrección" >En corrección</option>
+                <option value="Finalizado">Finalizado</option>
+            </select>
+        </td>
+    {{/if}}
+
+    {{#if (isStateEnCorreccion individualBug.estado)}}
+        <td>
+            <select name="state-{{@index}}" id="state-{{@index}}" class="form-select" onchange="changeBugState{{@index}}()">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En corrección" selected>En corrección</option>
+                <option value="Finalizado">Finalizado</option>
+            </select>
+        </td>
+    {{/if}}
+
+    {{#if (isStateFinalizado individualBug.estado)}}
+        <td>
+            <select name="state-{{@index}}" id="state-{{@index}}" class="form-select" onchange="changeBugState{{@index}}()">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En corrección">En corrección</option>
+                <option value="Finalizado" selected>Finalizado</option>
+            </select>
+        </td>
+    {{/if}}
 </tr>
+
+<script>
+    let changeBugState{{@index}} = async () => {
+        const id = {{individualBug.id_bug}}
+        const state = document.querySelector('#state-{{@index}}').value;
+        await fetch(`/bugState/${id}/${state}`, {method: 'POST'});
+    };
+</script>
