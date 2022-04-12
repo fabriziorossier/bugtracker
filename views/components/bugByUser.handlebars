@@ -38,5 +38,6 @@
         const id = {{individualBug.id_bug}}
         const state = document.querySelector('#state-{{@index}}').value;
         await fetch(`/bugState/${id}/${state}`, {method: 'POST'});
+        location.reload();
     };
 </script>
