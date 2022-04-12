@@ -1,10 +1,12 @@
 {{> title}}
 
-<button>Crear bug</button>
-<button>Crear usuario</button>
+<div class="text-center">
+    <button type="button" class="btn btn-dark" id="createBugButton" onclick="createBugButton()">Crear bug</button>
+    <button type="button" class="btn btn-dark" id="createUserButton" onclick="createUserButton()">Crear usuario</button>
+</div>
 
 {{!-- Crear bug --}}
-<form action="/bug" method="POST" id="createBug">
+<form action="/bug" method="POST" id="createBug" class="d-none">
     <div class="mb-3">
         <label for="bugName" class="form-label">Nombre del Bug</label>
         <input type="text" id="bugName" name="bugName">
@@ -26,7 +28,7 @@
 </form>
 
 {{!-- Crear usuario --}}
-<form action="/user" method="POST" id="createUser">
+<form action="/user" method="POST" id="createUser" class="d-none">
     <div class="mb-3">
         <label for="userName" class="form-label">Nombre de usuario</label>
         <input type="text" id="userName" name="userName">
@@ -49,3 +51,20 @@
     </div>
     <button type="submit">Crear usuario</button>
 </form>
+
+<script>
+    let createBugForm = document.querySelector('#createBug');
+    let createUserForm = document.querySelector('#createUser');
+    const createBugButton = () => {
+        createBugForm.classList.add('d-block');
+        createBugForm.classList.remove('d-none');
+        createUserForm.classList.remove('d-block');
+        createUserForm.classList.add('d-none');
+    };
+    const createUserButton = () => {
+        createUserForm.classList.add('d-block');
+        createUserForm.classList.remove('d-none');
+        createBugForm.classList.remove('d-block');
+        createBugForm.classList.add('d-none');
+    };
+</script>
