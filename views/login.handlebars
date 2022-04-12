@@ -4,17 +4,19 @@
     <h2 class="text-center">Iniciar Sesión</h2>
     <hr>
 
-    <form action="/signin" method="POST">
-        <div class="form-group">
+    <div class="mx-auto text-center w-25 min-vw-25">
+        <form action="/signin" method="POST">
             <div class="form-group">
-                <label for="loginEmail">Email</label>
-                <input type="text" name="email" id="loginEmail" class="form-control w-50 m-auto" />
+                <div class="form-group mb-3">
+                    <label for="loginEmail" class="form-label">Email</label>
+                    <input type="email" name="email" id="loginEmail" class="form-control m-auto" required />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="loginPassword" class="form-label">Contraseña</label>
+                    <input type="password" name="password" id="loginPassword" class="form-control m-auto" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="loginPassword">Contraseña</label>
-                <input type="password" name="password" id="loginPassword" class="form-control w-50 m-auto">
-            </div>
-        </div>
-        <button class="btn btn-success mb-3" type="submit">Ingresar</button>
-    </form>
+            <button class="btn btn-success my-3" type="submit">Ingresar</button>
+        </form>
+    </div>
 </div>
