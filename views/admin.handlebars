@@ -6,51 +6,54 @@
 </div>
 
 {{!-- Crear bug --}}
-<form action="/bug" method="POST" id="createBug" class="d-none">
-    <div class="mb-3">
-        <label for="bugName" class="form-label">Nombre del Bug</label>
-        <input type="text" id="bugName" name="bugName">
-        <div id="emailHelp" class="form-text">Nunca compartiremos tu email con nadie.</div>
-    </div>
-    <div class="mb-3">
-        <label for="bugDescription" class="form-label">Descripcion del Bug</label>
-        <input type="text" id="bugDescription" name="bugDescription">
-    </div>
-    <div class="mb-3">
-        <label for="bugUser" class="form-label">Desarrollador</label>
-        <select name="bugUser" id="bugUser" class="form-select">
-            {{#each usersGeneral}}
-                {{> userByUser individualUser=this}}
-            {{/each}}
-        </select>
-    </div>
-    <button type="submit">Crear bug</button>
-</form>
+<div class="w-50 mx-auto my-5">
+    <form action="/bug" method="POST" id="createBug" class="d-none">
+        <div class="mb-3">
+            <label for="bugName" class="form-label">Nombre del Bug</label>
+            <input type="text" id="bugName" name="bugName" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="bugDescription" class="form-label">Descripción del Bug</label>
+            <input type="text" id="bugDescription" name="bugDescription" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="bugUser" class="form-label">Desarrollador</label>
+            <select name="bugUser" id="bugUser" class="form-select">
+                {{#each usersGeneral}}
+                    {{> userByUser individualUser=this}}
+                {{/each}}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-secondary">Crear bug</button>
+    </form>
+</div>
 
 {{!-- Crear usuario --}}
-<form action="/user" method="POST" id="createUser" class="d-none">
-    <div class="mb-3">
-        <label for="userName" class="form-label">Nombre de usuario</label>
-        <input type="text" id="userName" name="userName">
-    </div>
-    <div class="mb-3">
-        <label for="userEmail" class="form-label">Email</label>
-        <input type="text" id="userEmail" name="userEmail">
-    </div>
-    <div class="mb-3">
-        <label for="userPassword" class="form-label">Contraseña</label>
-        <input type="password" id="userPassword" name="userPassword">
-    </div>
-    <div class="mb-3">
-        <label for="userRol" class="form-label">Rol</label>
-        <select id="userRol" name="userRol" class="form-select">
-            {{#each rols}}
-                {{> rol individualRol=this}}
-            {{/each}}
-        </select>
-    </div>
-    <button type="submit">Crear usuario</button>
-</form>
+<div class="w-50 mx-auto my-5">
+    <form action="/user" method="POST" id="createUser" class="d-none">
+        <div class="mb-3">
+            <label for="userName" class="form-label">Nombre de usuario</label>
+            <input type="text" id="userName" name="userName" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="userEmail" class="form-label">Email</label>
+            <input type="text" id="userEmail" name="userEmail" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="userPassword" class="form-label">Contraseña</label>
+            <input type="password" id="userPassword" name="userPassword" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="userRol" class="form-label">Rol</label>
+            <select id="userRol" name="userRol" class="form-select">
+                {{#each rols}}
+                    {{> rol individualRol=this}}
+                {{/each}}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-secondary">Crear usuario</button>
+    </form>
+</div>
 
 <script>
     let createBugForm = document.querySelector('#createBug');
