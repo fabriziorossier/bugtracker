@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const jwt = require('jsonwebtoken');
 const secretKey = require('./secretKey');
-const { createBug, createUser, obtainBugsGeneral, obtainBugsByUser, obtainUserNames, obtainRols, validateUser, changeBugState } = require('./SQLqueries');
+const { createBug, createUser, obtainBugsGeneral, obtainBugsByUser, obtainUserNames, obtainRols, validateUser, changeBugState, deleteUser } = require('./SQLqueries');
 const port = process.env.PORT || 3000;
 const minutes = 60;
 let tokenUser = '';
@@ -135,6 +135,13 @@ app.post('/bug', async (req, res) => {
 app.post('/user', async (req, res) => {
     const { userName, userEmail, userPassword, userRol } = req.body;
     await createUser(userName, userEmail, userPassword, userRol);
+    res.redirect('/');
+});
+
+// Delete user
+app.post('/userDelete', async (req, res) => {
+    const { deleteUserSelect } = req.body;
+    await deleteUser(deleteUserSelect);
     res.redirect('/');
 });
 

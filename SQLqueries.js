@@ -1,6 +1,6 @@
 require('dotenv').config();
-const { create } = require('express-handlebars');
 const { Pool } = require('pg');
+const { rows } = require('pg/lib/defaults');
 const config = {
     connectionString: process.env.DATABASE_URL,
     ssl: {
@@ -37,8 +37,8 @@ const createUser = async (userName, userEmail, userPassword, userRol) => {
         else if (userRol == 'developer'){
             rol = 2;
         }
-        const text = `INSERT INTO usuario(nombre, email, password, rol) VALUES ($1, $2, $3, $4)`;
-        const values = [userName, userEmail, userPassword, rol];
+        const text = `INSERT INTO usuario(nombre, email, password, rol, estado) VALUES ($1, $2, $3, $4, $5)`;
+        const values = [userName, userEmail, userPassword, rol, true];
         const result = await pool.query(text, values)
         .then(res => res.rows)
         .catch(err => console.error(`Error executing query`, err.stack))
@@ -89,8 +89,8 @@ const obtainBugsByUser = async (userName) => {
 // READ
 const obtainUserNames = async () => {
     try {
-        const text = `SELECT nombre FROM usuario WHERE rol = 2 ORDER BY nombre ASC`;
-        const values = [];
+        const text = `SELECT nombre FROM usuario WHERE rol = $1 AND estado = $2 ORDER BY nombre ASC`;
+        const values = [2, true];
         const result = await pool.query(text, values)
         .then(res => res.rows)
         .catch(err => console.error(`Error executing query`, err.stack))
@@ -154,4 +154,21 @@ const changeBugState = async (id, state) => {
 // UPDATE - DEBUG
 //changeBugState(13, 'Finalizado');
 
-module.exports = { createBug, createUser, obtainBugsGeneral, obtainBugsByUser, obtainUserNames, obtainRols, validateUser, changeBugState }
+// DELETE
+const deleteUser = async (nombre) => {
+    try {
+        const text = `UPDATE usuario SET estado = $1 WHERE nombre = $2`;
+        const values = [false, nombre];
+        const result = await pool.query(text, values)
+        .then(res => res.rows)
+        .catch(err => console.error(`Error executing query`, err.stack))
+        return result;
+    }
+    catch (e){
+        console.log(e);
+    }
+};
+// DELETE - DEBUG
+//deleteUser('biscuit');
+
+module.exports = { createBug, createUser, obtainBugsGeneral, obtainBugsByUser, obtainUserNames, obtainRols, validateUser, changeBugState, deleteUser }

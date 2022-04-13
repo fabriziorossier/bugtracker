@@ -3,6 +3,7 @@
 <div class="text-center">
     <button type="button" class="btn btn-dark" id="createBugButton" onclick="createBugButton()">Crear bug</button>
     <button type="button" class="btn btn-dark" id="createUserButton" onclick="createUserButton()">Crear usuario</button>
+    <button type="button" class="btn btn-dark" id="deleteUserButton" onclick="deleteUserButton()">Eliminar usuario</button>
 </div>
 
 {{!-- Crear bug --}}
@@ -55,19 +56,47 @@
     </form>
 </div>
 
+{{!-- Eliminar usuario --}}
+<div class="w-50 mx-auto my-5">
+    <form action="/userDelete" method="POST" id="deleteUser" class="d-none">
+        <div class="mb-3">
+            <label for="deleteUserSelect" class="form-label">Usuario</label>
+            <select name="deleteUserSelect" id="deleteUserSelect" class="form-select">
+                {{#each usersGeneral}}
+                    {{> userByUser individualUser=this}}
+                {{/each}}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-secondary">Eliminar usuario</button>
+    </form>
+</div>
+
 <script>
     let createBugForm = document.querySelector('#createBug');
     let createUserForm = document.querySelector('#createUser');
+    let deleteUserForm = document.querySelector('#deleteUser');
     const createBugButton = () => {
         createBugForm.classList.add('d-block');
         createBugForm.classList.remove('d-none');
         createUserForm.classList.remove('d-block');
         createUserForm.classList.add('d-none');
+        deleteUserForm.classList.remove('d-block');
+        deleteUserForm.classList.add('d-none');
     };
     const createUserButton = () => {
         createUserForm.classList.add('d-block');
         createUserForm.classList.remove('d-none');
         createBugForm.classList.remove('d-block');
         createBugForm.classList.add('d-none');
+        deleteUserForm.classList.remove('d-block');
+        deleteUserForm.classList.add('d-none');
+    };
+    const deleteUserButton = () => {
+        deleteUserForm.classList.add('d-block');
+        deleteUserForm.classList.remove('d-none');
+        createBugForm.classList.remove('d-block');
+        createBugForm.classList.add('d-none');
+        createUserForm.classList.remove('d-block');
+        createUserForm.classList.add('d-none');
     };
 </script>
