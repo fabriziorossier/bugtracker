@@ -89,7 +89,7 @@ const obtainBugsByUser = async (userName) => {
 // READ
 const obtainUserNames = async () => {
     try {
-        const text = `SELECT nombre FROM usuario ORDER BY ID_usuario ASC`;
+        const text = `SELECT nombre FROM usuario WHERE rol = 2 ORDER BY ID_usuario ASC`;
         const values = [];
         const result = await pool.query(text, values)
         .then(res => res.rows)
