@@ -23,13 +23,7 @@
     {{/if}}
 
     {{#if (isStateFinalizado individualBug.estado)}}
-        <td>
-            <select name="state-{{@index}}" id="state-{{@index}}" class="form-select" onchange="changeBugState{{@index}}()">
-                <option value="Pendiente">Pendiente</option>
-                <option value="En corrección">En corrección</option>
-                <option value="Finalizado" selected>Finalizado</option>
-            </select>
-        </td>
+        <td>Finalizado</td>
     {{/if}}
 </tr>
 

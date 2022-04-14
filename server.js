@@ -128,21 +128,21 @@ app.get('/admin', async (req, res) => {
 app.post('/bug', async (req, res) => {
     const { bugName, bugDescription, bugUser} = req.body;
     await createBug(bugName, bugDescription, bugUser);
-    res.redirect('/');
+    res.redirect('back');
 });
 
 // Create user
 app.post('/user', async (req, res) => {
     const { userName, userEmail, userPassword, userRol } = req.body;
     await createUser(userName, userEmail, userPassword, userRol);
-    res.redirect('/');
+    res.redirect('back');
 });
 
 // Delete user
 app.post('/userDelete', async (req, res) => {
     const { deleteUserSelect } = req.body;
     await deleteUser(deleteUserSelect);
-    res.redirect('/');
+    res.redirect('back');
 });
 
 // Change bug state
