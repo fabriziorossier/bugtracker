@@ -1,8 +1,7 @@
 require('dotenv').config();
 const { Pool } = require('pg');
-const { rows } = require('pg/lib/defaults');
 const config = {
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.SQL_URL,
     ssl: {
         rejectedUnauthorized: false
     }
