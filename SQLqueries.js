@@ -7,7 +7,7 @@ const config = {
     }
 };
 
-const pool = new Pool(config);
+const pool = new Pool();
 
 // CREATE
 const createBug = async (bugName, bugDescription, bugUser) => {
