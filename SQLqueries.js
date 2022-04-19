@@ -41,7 +41,6 @@ const createUser = async (userName, userEmail, userPassword, userRol) => {
         const result = await pool.query(text, values)
         .then(res => res.rows)
         .catch(err => console.error(`Error executing query`, err.stack))
-        console.log(result);
         return result;
     }
     catch (e){
