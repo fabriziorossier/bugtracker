@@ -23,3 +23,8 @@ td {
 
 #byUserBugTableDiv {
 }
+
+#generalBugChartDiv {
+    height: 33vh;
+    width: 80%;
+}

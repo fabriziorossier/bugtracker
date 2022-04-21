@@ -1,4 +1,6 @@
 <div class="py-4">
+    <div id="generalBugChartDiv" class="mx-auto mb-5"></div>
+
     <h2 class="text-center">Lista de todos los bugs</h2>
 
     <hr>
@@ -34,4 +36,31 @@
         minutes = date.getMinutes();
     }
     document.querySelector('caption').innerHTML = `Actualizado al ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} a las ${date.getHours()}:${minutes}`;
+</script>
+
+<script type="text/javascript">
+    {{!-- Obtain all developer names --}}
+    const bugsArray = {{{bugsJSON}}};
+    let developerNamesArray = [];
+    bugsArray.forEach(bug => developerNamesArray.push(bug.usuario))
+
+    {{!-- Create a Map Object that contains the developers names as keys, and the number of bugs they have assigned as values --}}
+    const developerBugsNamesAndCountArray = developerNamesArray.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
+
+    {{!-- Create the developers dataPoints as required by canvasJS syntax --}}
+    let developerBugsNameAndCountDataPoints = [];
+    developerBugsNamesAndCountArray.forEach((value, key) => developerBugsNameAndCountDataPoints.push({label: key, y: value}));
+
+    {{!-- Chart render --}}
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("generalBugChartDiv", {
+            data: [              
+                {
+                    type: "column",
+                    dataPoints: developerBugsNameAndCountDataPoints
+                }
+            ]
+        });
+        chart.render();
+    }
 </script>

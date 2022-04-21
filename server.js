@@ -56,8 +56,11 @@ app.use(bodyParser.json());
 
 // Index page
 app.get('/', async (req, res) => {
+    let bugs = await obtainBugsGeneral();
+    let bugsJSON = JSON.stringify(bugs);
     res.render('home', {
-        bugs: await obtainBugsGeneral(),
+        bugs: bugs,
+        bugsJSON: bugsJSON,
     });
 });
 
