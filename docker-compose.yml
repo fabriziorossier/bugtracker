@@ -1,0 +1,26 @@
+services:
+  bugtracker:
+    build:
+      context: .
+    ports:
+      - "8004:80"
+    environment:
+      NODE_ENV: production
+      POSTGRES_HOST: db
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17.2
+    restart: always
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
+    volumes:
+      - ./db_migrations:/docker-entrypoint-initdb.d
+    ports:
+      - ${PGPORT}:${PGPORT}
