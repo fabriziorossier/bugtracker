@@ -6,6 +6,6 @@ ALTER TABLE bug ADD CONSTRAINT bug_usuario_fkey FOREIGN KEY (usuario) REFERENCES
 
 -- Datos de prueba
 INSERT INTO bug(nombre, descripcion, usuario, estado) VALUES
-('Registro de usuarios', 'El registro de usuarios no funciona', 'Alexandra Larenas', 'Finalizado'),
-('Visualizacion bugs generales', 'No se visualizan los bugs generales', 'Alexandra Larenas', 'Pendiente'),
-('Visualizacion bugs por usuario', 'No se visualizan los bugs por usuario', 'Alexandra Larenas', 'En corrección');
+('Registro de usuarios', 'El registro de usuarios no funciona', 'Christopher González', 'Finalizado'),
+('Visualizacion bugs generales', 'No se visualizan los bugs generales', 'Christopher González', 'Pendiente'),
+('Visualizacion bugs por usuario', 'No se visualizan los bugs por usuario', 'Christopher González', 'En corrección');
