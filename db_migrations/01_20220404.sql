@@ -1,5 +1,3 @@
-CREATE DATABASE bugtracker;
-
 CREATE TABLE rol (
     ID_rol SERIAL,
     descripcion VARCHAR(32) NOT NULL,
@@ -31,9 +29,9 @@ INSERT INTO rol(descripcion) VALUES
 
 -- Datos de prueba
 INSERT INTO usuario(nombre, email, password, rol) VALUES
-('Fabrizio Rossier', 'fabrizio@example.com', '123456', 1),
-('Alexandra Larenas', 'alexandra@example.com', '123', 2),
-('Eugenio Lopez', 'eugenio@example.com', '123', 2);
+('Administrador', 'admin@bugtracker.com', '123456', 1),
+('Christopher González', 'christopher@bugtracker.com', '123', 2),
+('Óscar Verdugo', 'oscar@bugtracker.com', '123', 2);
 
 -- Datos de prueba
 INSERT INTO bug(nombre, descripcion, usuario) VALUES
