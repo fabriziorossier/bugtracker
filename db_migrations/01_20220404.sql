@@ -31,9 +31,9 @@ INSERT INTO rol(descripcion) VALUES
 
 -- Datos de prueba
 INSERT INTO usuario(nombre, email, password, rol) VALUES
-('Fabrizio Rossier', 'fabrizio@desafiolatam.com', '123456', 1),
-('Alexandra Larenas', 'alexandra@desafiolatam.com', '123', 2),
-('Eugenio Lopez', 'eugenio@desafiolatam.com', '123', 2);
+('Fabrizio Rossier', 'fabrizio@example.com', '123456', 1),
+('Alexandra Larenas', 'alexandra@example.com', '123', 2),
+('Eugenio Lopez', 'eugenio@example.com', '123', 2);
 
 -- Datos de prueba
 INSERT INTO bug(nombre, descripcion, usuario) VALUES
