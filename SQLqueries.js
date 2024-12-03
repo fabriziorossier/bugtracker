@@ -48,7 +48,7 @@ const createUser = async (userName, userEmail, userPassword, userRol) => {
     }
 };
 // CREATE - DEBUG
-//createUser('Miguel Angel', 'miguel@desafiolatam.com', '123', 'administrador');
+//createUser('Miguel Angel', 'miguel@example.com', '123', 'administrador');
 
 // READ
 const obtainBugsGeneral = async () => {
@@ -133,7 +133,7 @@ const validateUser = async (email, password) => {
     }
 };
 // READ - DEBUG
-//validateUser('fabrizio@desafiolatam.com', '123456');
+//validateUser('fabrizio@example.com', '123456');
 
 // UPDATE
 const changeBugState = async (id, state) => {
